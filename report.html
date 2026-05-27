@@ -66,93 +66,102 @@ body{
 
 <body>
 
+<div class="header">
+    <div class="header-title">检测报告查询系统</div>
+    <div class="header-sub">官方检测信息查询平台</div>
+</div>
+
 <div class="top">
 检测报告查询
 </div>
 
 <div class="card">
 
-<div class="row">
-<div class="left">报告编号</div>
-<div class="right" id="report"></div>
+    <div class="row">
+        <div class="left">报告编号</div>
+        <div class="right">ZGC202602316</div>
+    </div>
+
+    <div class="row">
+        <div class="left">送检单位</div>
+        <div class="right">厦门市御华园伙聚餐饮管理有限公司</div>
+    </div>
+
+    <div class="row">
+        <div class="left">样品名称</div>
+        <div class="right">环境与卫生</div>
+    </div>
+
+    <div class="row">
+        <div class="left">型号/规格</div>
+        <div class="right">/</div>
+    </div>
+
+    <div class="row">
+        <div class="left">报告时间</div>
+        <div class="right">2026年05月21日</div>
+    </div>
+
 </div>
 
-<div class="row">
-<div class="left">送检单位</div>
-<div class="right" id="company"></div>
+<div class="card">
+    <div class="right" style="width:100%;display:block;">
+
+        <p>首次查询时间：2026-05-21 18:22:31</p>
+
+        <p>
+            本次查询时间：
+            <span id="nowTime"></span>
+        </p>
+
+    </div>
 </div>
 
-<div class="row">
-<div class="left">样品名称</div>
-<div class="right" id="sample"></div>
-</div>
+<div class="card">
+    <div class="right" style="width:100%;display:block;">
 
-<div class="row">
-<div class="left">型号/规格</div>
-<div class="right" id="model"></div>
-</div>
+        <p>
+            1、本报告仅对本次送检样品负责。
+        </p>
 
-<div class="row">
-<div class="left">报告时间</div>
-<div class="right" id="date"></div>
-</div>
-
-</div>
-
-<div class="footer">
-检测报告查询系统
+    </div>
 </div>
 
 <script>
+function updateTime(){
 
-const data = {
+    const now = new Date();
 
-"1001":{
-    report:"ZGC202602316",
-    company:"安跃网络科技有限公司",
-    sample:"环境与卫生",
-    model:"/",
-    date:"2026年05月21日"
-},
+    const year = now.getFullYear();
 
-"1002":{
-    report:"TEST20260002",
-    company:"测试公司",
-    sample:"空气检测",
-    model:"A-01",
-    date:"2026年06月01日"
-},
-    
-"1003":{
-    report:"ABC888888",
-    company:"广州检测有限公司",
-    sample:"食品卫生",
-    model:"B-02",
-    date:"2026年07月01日"
-},
-    
-};
+    const month =
+        String(now.getMonth()+1).padStart(2,'0');
 
-const params = new URLSearchParams(window.location.search);
+    const day =
+        String(now.getDate()).padStart(2,'0');
 
-const id = params.get("id");
+    const hour =
+        String(now.getHours()).padStart(2,'0');
 
-const info = data[id];
+    const minute =
+        String(now.getMinutes()).padStart(2,'0');
 
-if(info){
+    const second =
+        String(now.getSeconds()).padStart(2,'0');
 
-document.getElementById("report").innerText = info.report;
-document.getElementById("company").innerText = info.company;
-document.getElementById("sample").innerText = info.sample;
-document.getElementById("model").innerText = info.model;
-document.getElementById("date").innerText = info.date;
+    const timeStr =
+        year + '-' +
+        month + '-' +
+        day + ' ' +
+        hour + ':' +
+        minute + ':' +
+        second;
 
-}else{
-
-document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px;'>未查询到报告</h2>";
-
+    document.getElementById("nowTime").innerText =
+        timeStr;
 }
 
+updateTime();
 </script>
 
 </body>
