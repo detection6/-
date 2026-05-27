@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>检测报告查询</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#f2f2f2;
+    font-family:Arial;
+}
+
+.top{
+    background:#1d9acb;
+    color:white;
+    text-align:center;
+    padding:20px;
+    font-size:30px;
+}
+
+.card{
+    background:white;
+    margin:20px;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.row{
+    display:flex;
+    border-bottom:1px solid #ddd;
+}
+
+.left{
+    width:35%;
+    background:#9ec8e5;
+    padding:20px;
+    font-size:22px;
+    font-weight:bold;
+    box-sizing:border-box;
+}
+
+.right{
+    width:65%;
+    padding:20px;
+    font-size:22px;
+    box-sizing:border-box;
+}
+
+.footer{
+    text-align:center;
+    color:#888;
+    margin-top:30px;
+    font-size:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="top">
+检测报告查询
+</div>
+
+<div class="card">
+
+<div class="row">
+<div class="left">报告编号</div>
+<div class="right" id="report"></div>
+</div>
+
+<div class="row">
+<div class="left">送检单位</div>
+<div class="right" id="company"></div>
+</div>
+
+<div class="row">
+<div class="left">样品名称</div>
+<div class="right" id="sample"></div>
+</div>
+
+<div class="row">
+<div class="left">型号/规格</div>
+<div class="right" id="model"></div>
+</div>
+
+<div class="row">
+<div class="left">报告时间</div>
+<div class="right" id="date"></div>
+</div>
+
+</div>
+
+<div class="footer">
+检测报告查询系统
+</div>
+
+<script>
+
+const data = {
+
+"1001":{
+    report:"ZGC202602316",
+    company:"厦门市御华园伙聚餐饮管理有限公司",
+    sample:"环境与卫生",
+    model:"/",
+    date:"2026年05月21日"
+},
+
+"1002":{
+    report:"TEST20260002",
+    company:"测试公司",
+    sample:"空气检测",
+    model:"A-01",
+    date:"2026年06月01日"
+}
+
+};
+
+const params = new URLSearchParams(window.location.search);
+
+const id = params.get("id");
+
+const info = data[id];
+
+if(info){
+
+document.getElementById("report").innerText = info.report;
+document.getElementById("company").innerText = info.company;
+document.getElementById("sample").innerText = info.sample;
+document.getElementById("model").innerText = info.model;
+document.getElementById("date").innerText = info.date;
+
+}else{
+
+document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px;'>未查询到报告</h2>";
+
+}
+
+</script>
+
+</body>
+</html>
