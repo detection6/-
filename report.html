@@ -67,39 +67,44 @@ body{
 <body>
 
 <div class="header">
-    <div class="header-title">检测报告查询系统</div>
-    <div class="header-sub">官方检测信息查询平台</div>
+    <div class="header-title">
+        检测报告查询系统
+    </div>
+
+    <div class="header-sub">
+        官方检测信息查询平台
+    </div>
 </div>
 
 <div class="top">
-检测报告查询
+    检测报告查询
 </div>
 
 <div class="card">
 
     <div class="row">
         <div class="left">报告编号</div>
-        <div class="right">ZGC202602316</div>
+        <div class="right" id="report"></div>
     </div>
 
     <div class="row">
         <div class="left">送检单位</div>
-        <div class="right">厦门市御华园伙聚餐饮管理有限公司</div>
+        <div class="right" id="company"></div>
     </div>
 
     <div class="row">
         <div class="left">样品名称</div>
-        <div class="right">环境与卫生</div>
+        <div class="right" id="sample"></div>
     </div>
 
     <div class="row">
         <div class="left">型号/规格</div>
-        <div class="right">/</div>
+        <div class="right" id="model"></div>
     </div>
 
     <div class="row">
         <div class="left">报告时间</div>
-        <div class="right">2026年05月21日</div>
+        <div class="right" id="date"></div>
     </div>
 
 </div>
@@ -107,7 +112,10 @@ body{
 <div class="card">
     <div class="right" style="width:100%;display:block;">
 
-        <p>首次查询时间：2026-05-21 18:22:31</p>
+        <p>
+            首次查询时间：
+            <span id="firstTime"></span>
+        </p>
 
         <p>
             本次查询时间：
@@ -119,49 +127,133 @@ body{
 
 <div class="card">
     <div class="right" style="width:100%;display:block;">
-
         <p>
             1、本报告仅对本次送检样品负责。
         </p>
-
     </div>
 </div>
 
 <script>
-function updateTime(){
 
-    const now = new Date();
+/* 客户数据库 */
 
-    const year = now.getFullYear();
+const data = {
 
-    const month =
-        String(now.getMonth()+1).padStart(2,'0');
+"1001":{
+    report:"ZGC202602316",
+    company:"大福鼎有限公司",
+    sample:"环境与卫生",
+    model:"/",
+    date:"2026年05月21日"
+},
 
-    const day =
-        String(now.getDate()).padStart(2,'0');
+"1002":{
+    report:"TEST20260002",
+    company:"xx检测有限公司",
+    sample:"食品卫生",
+    model:"B-02",
+    date:"2026年06月01日"
+},
 
-    const hour =
-        String(now.getHours()).padStart(2,'0');
-
-    const minute =
-        String(now.getMinutes()).padStart(2,'0');
-
-    const second =
-        String(now.getSeconds()).padStart(2,'0');
-
-    const timeStr =
-        year + '-' +
-        month + '-' +
-        day + ' ' +
-        hour + ':' +
-        minute + ':' +
-        second;
-
-    document.getElementById("nowTime").innerText =
-        timeStr;
+"1003":{
+    report:"ABC888888",
+    company:"xx环境科技有限公司",
+    sample:"空气检测",
+    model:"C-03",
+    date:"2026年07月15日"
 }
 
-updateTime();
+};
+
+/* 获取二维码参数 */
+
+const params =
+    new URLSearchParams(window.location.search);
+
+const id = params.get("id");
+
+const info = data[id];
+
+/* 显示客户数据 */
+
+if(info){
+
+document.getElementById("report").innerText =
+    info.report;
+
+document.getElementById("company").innerText =
+    info.company;
+
+document.getElementById("sample").innerText =
+    info.sample;
+
+document.getElementById("model").innerText =
+    info.model;
+
+document.getElementById("date").innerText =
+    info.date;
+
+}else{
+
+document.body.innerHTML =
+"<h2 style='text-align:center;margin-top:100px;'>未查询到报告</h2>";
+
+}
+
+/* 时间系统 */
+
+function formatTime(date){
+
+    const year = date.getFullYear();
+
+    const month =
+        String(date.getMonth()+1).padStart(2,'0');
+
+    const day =
+        String(date.getDate()).padStart(2,'0');
+
+    const hour =
+        String(date.getHours()).padStart(2,'0');
+
+    const minute =
+        String(date.getMinutes()).padStart(2,'0');
+
+    const second =
+        String(date.getSeconds()).padStart(2,'0');
+
+    return year + '-' +
+           month + '-' +
+           day + ' ' +
+           hour + ':' +
+           minute + ':' +
+           second;
+}
+
+const now = new Date();
+
+/* 本次时间 */
+
+document.getElementById("nowTime").innerText =
+    formatTime(now);
+
+/* 首次时间 */
+
+let firstTime =
+    localStorage.getItem("firstQueryTime_" + id);
+
+if(!firstTime){
+
+    firstTime = formatTime(now);
+
+    localStorage.setItem(
+        "firstQueryTime_" + id,
+        firstTime
+    );
+}
+
+document.getElementById("firstTime").innerText =
+    firstTime;
+
 </script>
 
 </body>
